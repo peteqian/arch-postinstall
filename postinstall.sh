@@ -87,6 +87,9 @@ if ! fc-list | grep -i "Monaco" &>/dev/null; then
   yay -S --noconfirm ttf-monaco
 fi
 
+# === Browsers ===
+yay -S --noconfirm google-chrome microsoft-edge-stable
+
 # === Gaming ===
 sudo pacman -S --noconfirm steam
 
