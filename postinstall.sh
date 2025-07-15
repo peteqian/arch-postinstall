@@ -17,7 +17,7 @@ if ! command -v oh-my-posh &>/dev/null; then
   brew install jandedobbeleer/oh-my-posh/oh-my-posh
 fi
 
-# Add Oh My Posh initialization to shell config
+# Add Oh My Posh to shell config
 if [[ "$SHELL" == */bash ]]; then
   grep -qxF 'eval "$(oh-my-posh init bash)"' ~/.bashrc || echo 'eval "$(oh-my-posh init bash)"' >> ~/.bashrc
 elif [[ "$SHELL" == */zsh ]]; then
@@ -48,8 +48,7 @@ if ! command -v rustc &>/dev/null; then
   source $HOME/.cargo/env
 fi
 
-# === Package Helpers & Utilities ===
-## yay (AUR helper)
+# === AUR Helper ===
 if ! command -v yay &>/dev/null; then
   echo "Installing yay..."
   git clone https://aur.archlinux.org/yay.git /tmp/yay
@@ -59,38 +58,41 @@ if ! command -v yay &>/dev/null; then
   rm -rf /tmp/yay
 fi
 
-# === Development Tools & IDEs ===
-## Visual Studio Code (AUR)
-if ! command -v code &>/dev/null; then
-  echo "Installing Visual Studio Code..."
-  yay -S --noconfirm visual-studio-code-bin
-fi
+# === IDEs & Editors ===
+## VS Code (Microsoft official)
+yay -S --noconfirm visual-studio-code-bin
 
-## Neovim
+## Neovim + LazyVim
 sudo pacman -S --noconfirm neovim
-
-# Install LazyVim config for Neovim
-LAZYVIM_DIR="$HOME/.config/nvim"
-if [ ! -d "$LAZYVIM_DIR" ]; then
-  echo "Installing LazyVim config..."
-  git clone https://github.com/LazyVim/starter.git "$LAZYVIM_DIR"
+if [ ! -d "$HOME/.config/nvim" ]; then
+  git clone https://github.com/LazyVim/starter ~/.config/nvim
 fi
 
-# Install Neovim dependencies after LazyVim
+# Post-LazyVim dependencies
 sudo pacman -S --noconfirm lazygit fzf ripgrep fd
 
 # === Fonts ===
 sudo pacman -S --noconfirm inter-font ttf-jetbrains-mono-nerd ttf-hack-nerd
-
-# Install Monaco (AUR)
-if ! fc-list | grep -i "Monaco" &>/dev/null; then
-  yay -S --noconfirm ttf-monaco
-fi
+yay -S --noconfirm ttf-monaco
 
 # === Browsers ===
 yay -S --noconfirm google-chrome microsoft-edge-stable
 
-# === Gaming ===
-sudo pacman -S --noconfirm steam
+# === Apps ===
+sudo pacman -S --noconfirm discord docker steam
+yay -S --noconfirm docker-desktop
 
-echo "✅ Setup complete! Restart your terminal or source your shell config to apply changes."
+# Docker setup
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker "$USER"
+
+# Enable Docker Desktop
+systemctl --user enable docker-desktop
+systemctl --user start docker-desktop
+
+# === Shell Enhancements ===
+sudo pacman -S --noconfirm fish
+echo "if command -v fish &>/dev/null; then exec fish; fi" >> ~/.bashrc
+
+echo "✅ Done! Reboot or logout/login for group changes and shell update to apply."
