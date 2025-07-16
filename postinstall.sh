@@ -1,4 +1,4 @@
-#!/bin/bash
+.#!/bin/bash
 set -e
 
 # === System Update & Essentials ===
@@ -19,9 +19,9 @@ fi
 
 # Add Oh My Posh to shell config
 if [[ "$SHELL" == */bash ]]; then
-  grep -qxF 'eval "$(oh-my-posh init bash)"' ~/.bashrc || echo 'eval "$(oh-my-posh init bash)"' >> ~/.bashrc
+  grep -qxF 'eval "$(oh-my-posh init bash)"' ~/.bashrc || echo 'eval "$(oh-my-posh init bash)"' >>~/.bashrc
 elif [[ "$SHELL" == */zsh ]]; then
-  grep -qxF 'eval "$(oh-my-posh init zsh)"' ~/.zshrc || echo 'eval "$(oh-my-posh init zsh)"' >> ~/.zshrc
+  grep -qxF 'eval "$(oh-my-posh init zsh)"' ~/.zshrc || echo 'eval "$(oh-my-posh init zsh)"' >>~/.zshrc
 fi
 
 # === Programming Languages ===
@@ -72,7 +72,7 @@ fi
 sudo pacman -S --noconfirm lazygit fzf ripgrep fd
 
 # === Fonts ===
-sudo pacman -S --noconfirm inter-font ttf-jetbrains-mono-nerd ttf-hack-nerd
+sudo pacman -S --noconfirm inter-font ttf-jetbrains-mono-nerd ttf-hack-nerd noto-fonts noto-fonts-cjk
 yay -S --noconfirm ttf-monaco
 
 # === Browsers ===
@@ -80,7 +80,7 @@ yay -S --noconfirm google-chrome microsoft-edge-stable
 
 # === Apps ===
 sudo pacman -S --noconfirm discord docker steam
-yay -S --noconfirm docker-desktop
+yay -S --noconfirm docker-desktop tradingview
 
 # Docker setup
 sudo systemctl enable docker
@@ -93,6 +93,6 @@ systemctl --user start docker-desktop
 
 # === Shell Enhancements ===
 sudo pacman -S --noconfirm fish
-echo "if command -v fish &>/dev/null; then exec fish; fi" >> ~/.bashrc
+echo "if command -v fish &>/dev/null; then exec fish; fi" >>~/.bashrc
 
 echo "✅ Done! Reboot or logout/login for group changes and shell update to apply."
