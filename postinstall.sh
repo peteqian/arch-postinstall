@@ -72,14 +72,14 @@ fi
 sudo pacman -S --noconfirm lazygit fzf ripgrep fd
 
 # === Fonts ===
-sudo pacman -S --noconfirm inter-font ttf-jetbrains-mono-nerd ttf-hack-nerd noto-fonts noto-fonts-cjk
+sudo pacman -S --noconfirm inter-font ttf-jetbrains-mono-nerd ttf-hack-nerd noto-fonts noto-fonts-cjk ttf-nerd-fonts-symbols-mono
 yay -S --noconfirm ttf-monaco
 
 # === Browsers ===
 yay -S --noconfirm google-chrome microsoft-edge-stable
 
 # === Apps ===
-sudo pacman -S --noconfirm discord docker steam
+sudo pacman -S --noconfirm discord docker steam kitty wofi waybar tff-font-awesome hyprland hyprshot swaync hyprlock hypridle stow hyprpaper
 yay -S --noconfirm docker-desktop tradingview
 
 # Docker setup
