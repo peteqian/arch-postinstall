@@ -68,6 +68,34 @@ else
   echo "✅ Rust already installed"
 fi
 
+# Bun (JavaScript runtime and package manager)
+if ! command -v bun &>/dev/null; then
+  install_with_curl \
+    "Bun" \
+    "curl -fsSL https://bun.sh/install | bash"
+
+  # Add bun to current session PATH
+  if [ -f "$HOME/.bun/bin/bun" ]; then
+    export PATH="$HOME/.bun/bin:$PATH"
+  fi
+else
+  echo "✅ Bun already installed"
+fi
+
+# Deno (JavaScript/TypeScript runtime)
+if ! command -v deno &>/dev/null; then
+  install_with_curl \
+    "Deno" \
+    "curl -fsSL https://deno.land/install.sh | sh"
+
+  # Add deno to current session PATH
+  if [ -f "$HOME/.deno/bin/deno" ]; then
+    export PATH="$HOME/.deno/bin:$PATH"
+  fi
+else
+  echo "✅ Deno already installed"
+fi
+
 # Starship prompt (alternative to Oh My Posh)
 if ! command -v starship &>/dev/null; then
   install_with_curl \
@@ -82,4 +110,3 @@ echo "🎉 All curl-based installations completed!"
 echo ""
 echo "Note: You may need to restart your shell or run 'source ~/.bashrc' (or ~/.zshrc)"
 echo "to use newly installed tools like NVM, Rust, etc."
-
