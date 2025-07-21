@@ -1,8 +1,15 @@
 FLATPAKS=(
   "spotify"
-  "discord"
-  "chrome"
-  "flathub app.zen_browser.zen"
+  "com.discordapp.Discord"
+  "com.google.Chrome/x86_64/stable"
+  "app.zen_browser.zen"
+  "com.brave.Browser"
+  "com.getpostman.Postman"
+  "com.heroicgameslauncher.hgl"
+  "com.obsproject.Studio"
+  "md.obsidian.Obsidian"
+  "org.blender.Blender"
+  "com.stremio.Stremio"
 )
 
 for pak in "${FLATPAKS[@]}"; do
