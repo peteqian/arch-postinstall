@@ -10,6 +10,10 @@ FLATPAKS=(
   "md.obsidian.Obsidian"
   "org.blender.Blender"
   "com.stremio.Stremio"
+  "rest.insomnia.Insomnia"
+  "com.parsecgaming.parsec"
+  "org.audacityteam.Audacity"
+  "org.signal.Signal"
 )
 
 for pak in "${FLATPAKS[@]}"; do
