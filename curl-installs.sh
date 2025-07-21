@@ -3,41 +3,82 @@
 # Function to install via curl with error handling
 install_with_curl() {
     local name=$1
-    local url=$2
-    local install_cmd=$3
+    local install_cmd=$2
     
     echo "🚀 Installing $name..."
-    if ! eval "$install_cmd" &> /dev/null; then
+    if eval "$install_cmd"; then
+        echo "✅ $name installed successfully"
+        return 0
+    else
         echo "❌ Failed to install $name"
         return 1
     fi
-    echo "✅ $name installed successfully"
-    return 0
 }
 
 # Homebrew
 if ! command -v brew &>/dev/null; then
     install_with_curl \
         "Homebrew" \
-        "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh" \
-        "/bin/bash -c \"\$(curl -fsSL $url)\" && eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\""
+        '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
+else
+    echo "✅ Homebrew already installed"
 fi
 
 # Oh My Posh
 if ! command -v oh-my-posh &>/dev/null; then
     install_with_curl \
         "Oh My Posh" \
-        "https://ohmyposh.dev/install.sh" \
-        "curl -sSL $url | bash -s -- -b /usr/local/bin"
+        "curl -sSL https://ohmyposh.dev/install.sh | bash -s -- -b /usr/local/bin"
+else
+    echo "✅ Oh My Posh already installed"
 fi
 
-# Add more curl installations below as needed
-# Example:
-# if ! command -v some-tool &>/dev/null; then
-#     install_with_curl \
-#         "Some Tool" \
-#         "https://example.com/install.sh" \
-#         "curl -sSL $url | bash"
-# fi
+# NVM (Node Version Manager)
+if [ ! -d "$HOME/.nvm" ]; then
+    install_with_curl \
+        "NVM" \
+        'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash'
+    
+    # Source NVM to make it available in current session
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    
+    # Install latest LTS Node.js
+    if command -v nvm &>/dev/null; then
+        echo "🚀 Installing Node.js LTS via NVM..."
+        nvm install --lts
+        nvm use --lts
+        echo "✅ Node.js LTS installed successfully"
+    fi
+else
+    echo "✅ NVM already installed"
+fi
 
-echo "\n🎉 All curl-based installations completed!"
+# Rust
+if ! command -v rustc &>/dev/null; then
+    install_with_curl \
+        "Rust" \
+        'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y'
+    
+    # Source cargo env to make it available in current session
+    if [ -f "$HOME/.cargo/env" ]; then
+        source "$HOME/.cargo/env"
+    fi
+else
+    echo "✅ Rust already installed"
+fi
+
+# Starship prompt (alternative to Oh My Posh)
+if ! command -v starship &>/dev/null; then
+    install_with_curl \
+        "Starship" \
+        "curl -sSL https://starship.rs/install.sh | sh -s -- -y"
+else
+    echo "✅ Starship already installed"
+fi
+
+echo ""
+echo "🎉 All curl-based installations completed!"
+echo ""
+echo "Note: You may need to restart your shell or run 'source ~/.bashrc' (or ~/.zshrc)"
+echo "to use newly installed tools like NVM, Rust, etc."
