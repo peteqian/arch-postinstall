@@ -1,5 +1,0 @@
-keybind=alt+t=new_tab
-keybind=alt+w=close_surface
-keybind=alt+shift+d=new_split:down
-keybind=alt+d=new_split:right
-
