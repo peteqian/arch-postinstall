@@ -15,6 +15,7 @@ FLATPAKS=(
   "org.audacityteam.Audacity"
   "org.signal.Signal",
   "com.valuesoftware.Steam"
+  "io.podman_desktop.PodmanDesktop"
 )
 
 for pak in "${FLATPAKS[@]}"; do
@@ -25,4 +26,3 @@ for pak in "${FLATPAKS[@]}"; do
     echo "Flatpak already installed: $pak"
   fi
 done
-
